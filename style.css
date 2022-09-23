@@ -1,2 +1,58 @@
 /* style.css */
 /* CALCULATOR */
+
+*:not(body, html) {
+  outline: 1px solid black; 
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  width: 256px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+#display {
+  flex-basis: 20%;
+}
+
+#buttons-container {
+  flex-basis: 80%;
+  display: flex;
+}
+
+.left.buttons {
+  flex-basis: 75%;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.left.buttons > div {
+  flex: 1 0 33.33%;
+}
+
+.left.buttons > .zero {
+  flex: 1 0 66.66%;
+}
+
+.right.buttons {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.right.buttons > div {
+  flex-basis: 20%;
+}
+
+.right.buttons > .equal {
+  flex-grow: 1;
+}
