@@ -10,6 +10,8 @@ const NUMBERS = BUTTONS.filter(btn => {
   return isNum.test(btn.textContent)
 });
 
+const CLEAR = document.querySelector('.clear');
+
 const add = (x, y) => x + y;
 
 const subtract = (x, y) => x - y;
@@ -27,3 +29,5 @@ const type = (button) => {
 NUMBERS.forEach(num => {
   num.addEventListener('click', () => type(num))
 });
+
+CLEAR.addEventListener('click', () => DISPLAY.textContent = '');
