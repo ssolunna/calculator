@@ -5,12 +5,15 @@ const DISPLAY = document.querySelector('#display');
 
 const BUTTONS = Array.from(document.querySelectorAll('.buttons > *'));
 
-const NUMBERS = BUTTONS.filter(btn => {
-  isNum = /[0-9]/;
-  return isNum.test(btn.textContent)
-});
+const NUMBERS = BUTTONS.filter(btn => /[0-9]/.test(btn.textContent));
+
+const OPERATORS = BUTTONS.filter(btn => /[-x÷\+]/.test(btn.textContent));
 
 const CLEAR = document.querySelector('.clear');
+
+let x = null;
+
+let y = null;
 
 const add = (x, y) => x + y;
 
@@ -31,3 +34,9 @@ NUMBERS.forEach(num => {
 });
 
 CLEAR.addEventListener('click', () => DISPLAY.textContent = '');
+
+OPERATORS.forEach(operator => {
+  operator.addEventListener('click', () => {
+    x = DISPLAY.textContent;
+  });
+})
