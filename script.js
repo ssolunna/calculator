@@ -9,6 +9,10 @@ const NUMBERS = BUTTONS.filter(btn => /[0-9]/.test(btn.textContent));
 
 const CLEAR = document.querySelector('.clear');
 
+const EQUAL = document.querySelector('.equal');
+
+let EQUAL_clicked = false;
+
 let displayCleared = true;
 
 let displayValue = [];
@@ -38,8 +42,6 @@ const OPERATORS = [
   { div: document.querySelector('.divide'), func: divide }
 ];
 
-CLEAR.addEventListener('click', () => clearDisplay());
-
 NUMBERS.forEach(num => {
   num.addEventListener('click', () => type(num))
 });
@@ -60,9 +62,16 @@ function type(num) {
 
 OPERATORS.forEach(operator => {
   operator['div'].addEventListener('click', () => {
+    if (EQUAL_clicked) {
+      displayValue = [];
+      operation = [];
+      EQUAL_clicked = false;
+    }
+    
     displayValue.push(Number(DISPLAY.textContent));
     operation.push(operator['func']);
-    if (!x) { x = displayValue[0] }
+    
+    if (x == null) { x = displayValue[0] }
     if (displayValue.length == 2) {
       y = displayValue[1];
       getResult();
@@ -70,15 +79,27 @@ OPERATORS.forEach(operator => {
   });
 })
 
+EQUAL.addEventListener('click', () => {
+  EQUAL_clicked = true;
+  if (displayValue.length == 1) {
+    x = displayValue[0];
+    y = Number(DISPLAY.textContent);
+    getResult();
+  }
+});
+
 function getResult() {
   result = operate(operation[0], x, y);
   DISPLAY.textContent = result;
   displayValue = [result];
-  operation.splice(0,1);
+  if (operation.length == 2) { operation.splice(0,1) }
 }
+
+CLEAR.addEventListener('click', () => clearDisplay());
 
 function clearDisplay() {
   DISPLAY.textContent = '0';
+  EQUAL_clicked = false;
   displayCleared = true;
   x = null;
   y = null;
