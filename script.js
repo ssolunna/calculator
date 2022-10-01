@@ -52,8 +52,8 @@ function type(num) {
     displayCleared = false;
   }
 
-  if (x) {
-    x = null
+  if (x || x == 0) {
+    x = null;
     DISPLAY.textContent = '';
   }
 
@@ -63,15 +63,18 @@ function type(num) {
 OPERATORS.forEach(operator => {
   operator['div'].addEventListener('click', () => {
     if (EQUAL_clicked) {
+      x = null;
       displayValue = [];
       operation = [];
       EQUAL_clicked = false;
     }
     
-    displayValue.push(Number(DISPLAY.textContent));
-    operation.push(operator['func']);
-    
-    if (x == null) { x = displayValue[0] }
+    if (x == null) {
+      displayValue.push(Number(DISPLAY.textContent));
+      operation.push(operator['func']);
+      x = displayValue[0];
+    }
+
     if (displayValue.length == 2) {
       y = displayValue[1];
       getResult();
@@ -80,8 +83,8 @@ OPERATORS.forEach(operator => {
 })
 
 EQUAL.addEventListener('click', () => {
-  EQUAL_clicked = true;
-  if (displayValue.length == 1) {
+  if (displayValue.length == 1 && x == null) {
+    EQUAL_clicked = true;
     x = displayValue[0];
     y = Number(DISPLAY.textContent);
     getResult();
