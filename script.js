@@ -69,6 +69,8 @@ OPERATORS.forEach(operator => {
       EQUAL_clicked = false;
     }
     
+    if (x || x == 0) { operation[0] = operator['func'] }
+
     if (x == null) {
       displayValue.push(Number(DISPLAY.textContent));
       operation.push(operator['func']);
