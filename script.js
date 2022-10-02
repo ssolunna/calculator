@@ -95,6 +95,7 @@ EQUAL.addEventListener('click', () => {
 
 function getResult() {
   result = operate(operation[0], x, y);
+  result = Math.round(result * 100) / 100;
   DISPLAY.textContent = result;
   displayValue = [result];
   if (operation.length == 2) { operation.splice(0,1) }
