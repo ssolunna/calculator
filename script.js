@@ -11,9 +11,13 @@ const CLEAR = document.querySelector('.clear');
 
 const EQUAL = document.querySelector('.equal');
 
+const POINT = document.querySelector('.point');
+
+let DISPLAY_cleared = true;
+
 let EQUAL_clicked = false;
 
-let displayCleared = true;
+let POINT_clicked = false;
 
 let displayValue = [];
 
@@ -46,10 +50,30 @@ NUMBERS.forEach(num => {
   num.addEventListener('click', () => type(num))
 });
 
+POINT.addEventListener('click', addDecimals);
+
+function addDecimals() {
+  if (x || x == 0) {
+    DISPLAY.textContent = '0';
+    x = null;
+  }
+
+  // Check if there is already a point in the display
+  if (!(/\./.test(DISPLAY.textContent))) {
+    DISPLAY.textContent += '.';
+    POINT_clicked = true;
+  }
+}
+
 function type(num) {
-  if (displayCleared) {
+  if (POINT_clicked) {
+    DISPLAY_cleared = false;
+    POINT_clicked = false;
+  }
+
+  if (DISPLAY_cleared) {
     DISPLAY.textContent = '';
-    displayCleared = false;
+    DISPLAY_cleared = false;
   }
 
   if (x || x == 0) {
@@ -101,12 +125,12 @@ function getResult() {
   if (operation.length == 2) { operation.splice(0,1) }
 }
 
-CLEAR.addEventListener('click', () => clearDisplay());
+CLEAR.addEventListener('click', clearDisplay);
 
 function clearDisplay() {
   DISPLAY.textContent = '0';
+  DISPLAY_cleared = true;
   EQUAL_clicked = false;
-  displayCleared = true;
   x = null;
   y = null;
   displayValue = [];
