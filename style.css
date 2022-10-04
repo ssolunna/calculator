@@ -20,13 +20,22 @@ body {
   flex-direction: column;
 }
 
+#message {
+  align-self: flex-end;
+}
+
 #display {
   flex-basis: 20%;
+  align-self: flex-end;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 15px;
 }
 
 #buttons-container {
   flex-basis: 80%;
   display: flex;
+  flex-shrink: 0;
 }
 
 .left.buttons {

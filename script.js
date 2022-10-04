@@ -13,6 +13,8 @@ const EQUAL = document.querySelector('.equal');
 
 const POINT = document.querySelector('.point');
 
+const ERROR = document.querySelector('#message');
+
 let DISPLAY_cleared = true;
 
 let EQUAL_clicked = false;
@@ -35,7 +37,14 @@ const subtract = (x, y) => x - y;
 
 const multiply = (x, y) => x * y;
 
-const divide = (x, y) => x / y;
+const divide = (x, y) => {
+  if (y == 0) {
+    displayError('Infinity');
+    return 0
+  } else {
+    return x / y
+  }
+};
 
 const operate = (operator, x, y) => operator(x, y);
 
@@ -53,6 +62,8 @@ NUMBERS.forEach(num => {
 POINT.addEventListener('click', addDecimals);
 
 function addDecimals() {
+  if (ERROR.textContent) { clearDisplay(); }
+  
   if (x || x == 0) {
     DISPLAY.textContent = '0';
     x = null;
@@ -66,6 +77,8 @@ function addDecimals() {
 }
 
 function type(num) {
+  if (ERROR.textContent) { clearDisplay(); }
+  
   if (POINT_clicked) {
     DISPLAY_cleared = false;
     POINT_clicked = false;
@@ -90,6 +103,8 @@ function type(num) {
 
 OPERATORS.forEach(operator => {
   operator['div'].addEventListener('click', () => {
+    if (ERROR.textContent) { clearDisplay(); }
+    
     if (EQUAL_clicked) {
       x = null;
       displayValue = [];
@@ -132,12 +147,19 @@ function getResult() {
 CLEAR.addEventListener('click', clearDisplay);
 
 function clearDisplay() {
-  DISPLAY.textContent = '0';
-  DISPLAY_cleared = true;
-  EQUAL_clicked = false;
-  POINT_clicked = false;
-  x = null;
-  y = null;
-  displayValue = [];
-  operation = [];
+  if (!DISPLAY_cleared) {
+    displayError('');
+    DISPLAY.textContent = '0';
+    DISPLAY_cleared = true;
+    EQUAL_clicked = false;
+    POINT_clicked = false;
+    x = null;
+    y = null;
+    displayValue = [];
+    operation = [];
+  }
+}
+
+function displayError(message) {
+  ERROR.textContent = message;
 }
