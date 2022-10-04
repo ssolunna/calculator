@@ -73,15 +73,19 @@ function type(num) {
 
   if (DISPLAY_cleared) {
     DISPLAY.textContent = '';
-    DISPLAY_cleared = false;
+    if (num.textContent !== '0') { DISPLAY_cleared = false; }
   }
 
   if (x || x == 0) {
-    x = null;
     DISPLAY.textContent = '';
+    x = null;
   }
-
-  DISPLAY.textContent += num.textContent;
+  
+  if (DISPLAY.textContent == '0' && num.textContent == '0') {
+    DISPLAY.textContent = 0;
+  } else {
+    DISPLAY.textContent += num.textContent;
+  }
 }
 
 OPERATORS.forEach(operator => {
@@ -122,7 +126,7 @@ function getResult() {
   result = Math.round(result * 100) / 100;
   DISPLAY.textContent = result;
   displayValue = [result];
-  if (operation.length == 2) { operation.splice(0,1) }
+  if (operation.length == 2) { operation.splice(0,1); }
 }
 
 CLEAR.addEventListener('click', clearDisplay);
@@ -131,6 +135,7 @@ function clearDisplay() {
   DISPLAY.textContent = '0';
   DISPLAY_cleared = true;
   EQUAL_clicked = false;
+  POINT_clicked = false;
   x = null;
   y = null;
   displayValue = [];
