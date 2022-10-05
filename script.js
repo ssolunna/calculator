@@ -9,6 +9,8 @@ const NUMBERS = BUTTONS.filter(btn => /[0-9]/.test(btn.textContent));
 
 const CLEAR = document.querySelector('.clear');
 
+const DELETE = document.querySelector('.delete');
+
 const EQUAL = document.querySelector('.equal');
 
 const POINT = document.querySelector('.point');
@@ -147,16 +149,27 @@ function getResult() {
 CLEAR.addEventListener('click', clearDisplay);
 
 function clearDisplay() {
-  if (!DISPLAY_cleared) {
-    displayError('');
-    DISPLAY.textContent = '0';
-    DISPLAY_cleared = true;
-    EQUAL_clicked = false;
-    POINT_clicked = false;
-    x = null;
-    y = null;
-    displayValue = [];
-    operation = [];
+  displayError('');
+  DISPLAY.textContent = '0';
+  DISPLAY_cleared = true;
+  EQUAL_clicked = false;
+  POINT_clicked = false;
+  x = null;
+  y = null;
+  displayValue = [];
+  operation = [];
+}
+
+DELETE.addEventListener('click', undo);
+
+function undo() {
+  if (DISPLAY.textContent !== '0' && !x) {
+    if (DISPLAY.textContent.endsWith(".")) { POINT_clicked = false; }
+    DISPLAY.textContent = DISPLAY.textContent.substring(0, DISPLAY.textContent.length - 1);
+    if (DISPLAY.textContent == '') {
+      DISPLAY.textContent = 0;
+      DISPLAY_cleared = true;
+    }
   }
 }
 
