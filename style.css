@@ -14,54 +14,58 @@ body {
 }
 
 #calculator {
-  width: 256px;
-  height: 400px;
+  width: 296px;
   display: flex;
   flex-direction: column;
 }
 
 #message {
+  height: 18px;
   align-self: flex-end;
+  color: #bebebe;
+  font-size: 18px;
+  margin-right: 15px;
 }
 
 #display {
-  flex-basis: 20%;
   align-self: flex-end;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: 15px;
+  font-size: 54px;
+  margin: 0 15px 15px 0;
 }
 
 #buttons-container {
-  flex-basis: 80%;
+  font-size: 18px;
   display: flex;
-  flex-shrink: 0;
 }
 
-.left.buttons {
-  flex-basis: 75%;
+.left-buttons {
   display: flex;
   flex-flow: row wrap;
 }
 
-.left.buttons > div {
-  flex: 1 0 33.33%;
+.left-buttons > .zero {
+  width: 138px;
+  border-radius: 100px;
 }
 
-.left.buttons > .zero {
-  flex: 1 0 66.66%;
-}
-
-.right.buttons {
-  flex-basis: 25%;
+.right-buttons {
   display: flex;
   flex-direction: column;
 }
 
-.right.buttons > div {
-  flex-basis: 20%;
+.right-buttons > .equal {
+  height: 138px;
+  border-radius: 100px;
 }
 
-.right.buttons > .equal {
-  flex-grow: 1;
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  box-shadow: 3px 3px 7px #bebebe,
+              inset 2px 2px #ffffff;
+  margin: 5px;
+  width: 64px;
+  height: 64px;
 }

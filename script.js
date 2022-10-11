@@ -3,7 +3,7 @@
 
 const DISPLAY = document.querySelector('#display');
 
-const BUTTONS = Array.from(document.querySelectorAll('.buttons > *'));
+const BUTTONS = Array.from(document.querySelectorAll('.buttons'));
 
 const NUMBERS = BUTTONS.filter(btn => /[0-9]/.test(btn.textContent));
 
@@ -41,7 +41,7 @@ const multiply = (x, y) => x * y;
 
 const divide = (x, y) => {
   if (y == 0) {
-    displayError('Infinity');
+    displayError('Division by 0 is undefined');
     return 0
   } else {
     return x / y
