@@ -69,3 +69,8 @@ body {
   width: 64px;
   height: 64px;
 }
+
+.buttons:hover {
+  box-shadow: inset 3px 3px 7px #bebebe,
+              inset -3px -3px 7px #ffffff;
+}
