@@ -74,3 +74,8 @@ body {
   box-shadow: inset 3px 3px 7px #bebebe,
               inset -3px -3px 7px #ffffff;
 }
+
+.operators.clicked {
+  box-shadow: inset 3px 3px 12px #bebebe,
+              inset -3px -3px 12px #ffffff;
+}

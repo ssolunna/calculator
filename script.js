@@ -57,6 +57,8 @@ const OPERATORS = [
   { div: document.querySelector('.divide'), func: divide }
 ];
 
+let OPERATOR_clicked = null;
+
 NUMBERS.forEach(num => {
   num.addEventListener('click', () => type(num))
 });
@@ -93,6 +95,7 @@ function type(num) {
 
   if (x || x == 0) {
     DISPLAY.textContent = '';
+    OPERATOR_clicked.classList.remove('clicked');
     x = null;
   }
   
@@ -113,14 +116,18 @@ OPERATORS.forEach(operator => {
       operation = [];
       EQUAL_clicked = false;
     }
-    
-    if (x || x == 0) { operation[0] = operator['func'] }
 
     if (x == null) {
       displayValue.push(Number(DISPLAY.textContent));
       operation.push(operator['func']);
       x = displayValue[0];
+    } else {
+      OPERATOR_clicked.classList.remove('clicked');
+      operation[0] = operator['func'];
     }
+
+    operator['div'].classList.add('clicked');
+    OPERATOR_clicked = document.querySelector('.clicked');
 
     if (displayValue.length == 2) {
       y = displayValue[1];
@@ -149,6 +156,10 @@ function getResult() {
 CLEAR.addEventListener('click', clearDisplay);
 
 function clearDisplay() {
+  if (OPERATOR_clicked) {
+    OPERATOR_clicked.classList.remove('clicked');
+    OPERATOR_clicked = null;
+  }
   displayError('');
   DISPLAY.textContent = '0';
   DISPLAY_cleared = true;
