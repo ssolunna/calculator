@@ -77,6 +77,7 @@ function addDecimals() {
   if (!(/\./.test(DISPLAY.textContent))) {
     DISPLAY.textContent += '.';
     POINT_clicked = true;
+    CLEAR.textContent = 'C';
   }
 }
 
@@ -90,7 +91,10 @@ function type(num) {
 
   if (DISPLAY_cleared) {
     DISPLAY.textContent = '';
-    if (num.textContent !== '0') { DISPLAY_cleared = false; }
+    if (num.textContent !== '0') {
+      DISPLAY_cleared = false;
+      CLEAR.textContent = 'C';
+    }
   }
 
   if (x || x == 0) {
@@ -161,6 +165,7 @@ function clearDisplay() {
     OPERATOR_clicked = null;
   }
   displayError('');
+  CLEAR.textContent = 'AC';
   DISPLAY.textContent = '0';
   DISPLAY_cleared = true;
   EQUAL_clicked = false;
