@@ -112,7 +112,10 @@ function type(num) {
 
 OPERATORS.forEach(operator => {
   operator['div'].addEventListener('click', () => {
-    if (ERROR.textContent) { clearDisplay(); }
+    if (ERROR.textContent) {
+      clearDisplay();
+      CLEAR.textContent = 'C';
+    }
     
     if (EQUAL_clicked) {
       x = null;
@@ -164,7 +167,7 @@ function clearDisplay() {
     OPERATOR_clicked.classList.remove('clicked');
     OPERATOR_clicked = null;
   }
-  displayError('');
+  if (ERROR) { displayError(''); }
   CLEAR.textContent = 'AC';
   DISPLAY.textContent = '0';
   DISPLAY_cleared = true;
@@ -191,4 +194,9 @@ function undo() {
 
 function displayError(message) {
   ERROR.textContent = message;
+  if (message) {
+    ERROR.classList.add('error');
+  } else { 
+    ERROR.classList.remove('error');
+  }
 }
