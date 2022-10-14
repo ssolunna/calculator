@@ -32,9 +32,11 @@ body {
 }
 
 #display {
+  max-width: 269px;
   align-self: flex-end;
   font-size: 54px;
   margin: 0 15px 15px 0;
+  overflow-y: auto;
 }
 
 #buttons-container {
