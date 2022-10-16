@@ -99,7 +99,6 @@ function type(num) {
 
   if (x || x == 0) {
     DISPLAY.textContent = '';
-    OPERATOR_clicked.classList.remove('clicked');
     x = null;
   }
   
@@ -112,6 +111,8 @@ function type(num) {
 
 OPERATORS.forEach(operator => {
   operator['div'].addEventListener('click', () => {
+    if (OPERATOR_clicked) { OPERATOR_clicked.classList.remove('clicked'); }
+    
     if (ERROR.textContent) {
       clearDisplay();
       CLEAR.textContent = 'C';
@@ -129,7 +130,6 @@ OPERATORS.forEach(operator => {
       operation.push(operator['func']);
       x = displayValue[0];
     } else {
-      OPERATOR_clicked.classList.remove('clicked');
       operation[0] = operator['func'];
     }
 
@@ -145,6 +145,7 @@ OPERATORS.forEach(operator => {
 
 EQUAL.addEventListener('click', () => {
   if (displayValue.length == 1 && x == null) {
+    OPERATOR_clicked.classList.remove('clicked');
     EQUAL_clicked = true;
     x = displayValue[0];
     y = Number(DISPLAY.textContent);
