@@ -6,6 +6,8 @@ This project was made for [The Odin Project](https://www.theodinproject.com/less
 
 > **Note:** This webpage is meant for desktop devices only, but may work on some mobile devices.
 
+![calculator](https://user-images.githubusercontent.com/65374099/196466728-1a2404d6-2817-4134-8cb7-c4b9418a18d0.gif)
+
 ## Acknowledgements
 - [Design](https://www.behance.net/gallery/149380107/DAILY-UI-004-Calculator?tracking_source=search_projects%7Ccalculator)
 ___
