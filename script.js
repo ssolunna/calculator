@@ -51,35 +51,17 @@ const divide = (x, y) => {
 const operate = (operator, x, y) => operator(x, y);
 
 const OPERATORS = [
-  { div: document.querySelector('.add'), func: add },
-  { div: document.querySelector('.subtract'), func: subtract },
-  { div: document.querySelector('.multiply'), func: multiply },
-  { div: document.querySelector('.divide'), func: divide }
+  { name: '+', div: document.querySelector('.add'), func: add },
+  { name: '-', div: document.querySelector('.subtract'), func: subtract },
+  { name: '*', div: document.querySelector('.multiply'), func: multiply },
+  { name: '/', div: document.querySelector('.divide'), func: divide }
 ];
 
 let OPERATOR_clicked = null;
 
 NUMBERS.forEach(num => {
-  num.addEventListener('click', () => type(num))
+  num.addEventListener('click', () => type(num.textContent))
 });
-
-POINT.addEventListener('click', addDecimals);
-
-function addDecimals() {
-  if (ERROR.textContent) { clearDisplay(); }
-  
-  if (x || x == 0) {
-    DISPLAY.textContent = '0';
-    x = null;
-  }
-
-  // Check if there is already a point in the display
-  if (!(/\./.test(DISPLAY.textContent))) {
-    DISPLAY.textContent += '.';
-    POINT_clicked = true;
-    CLEAR.textContent = 'C';
-  }
-}
 
 function type(num) {
   if (ERROR.textContent) { clearDisplay(); }
@@ -91,7 +73,7 @@ function type(num) {
 
   if (DISPLAY_cleared) {
     DISPLAY.textContent = '';
-    if (num.textContent !== '0') {
+    if (num !== '0') {
       DISPLAY_cleared = false;
       CLEAR.textContent = 'C';
     }
@@ -102,48 +84,69 @@ function type(num) {
     x = null;
   }
   
-  if (DISPLAY.textContent == '0' && num.textContent == '0') {
+  if (DISPLAY.textContent == '0' && num == '0') {
     DISPLAY.textContent = 0;
   } else {
-    DISPLAY.textContent += num.textContent;
+    DISPLAY.textContent += num;
+  }
+}
+
+POINT.addEventListener('click', addDecimals);
+
+function addDecimals() {
+  if (ERROR.textContent) { clearDisplay(); }
+  
+  if (x || x == 0) {
+    DISPLAY.textContent = '0';
+    x = null;
+  }
+
+  if (!(/\./.test(DISPLAY.textContent))) {
+    DISPLAY.textContent += '.';
+    POINT_clicked = true;
+    CLEAR.textContent = 'C';
   }
 }
 
 OPERATORS.forEach(operator => {
-  operator['div'].addEventListener('click', () => {
-    if (OPERATOR_clicked) { OPERATOR_clicked.classList.remove('clicked'); }
-    
-    if (ERROR.textContent) {
-      clearDisplay();
-      CLEAR.textContent = 'C';
-    }
-    
-    if (EQUAL_clicked) {
-      x = null;
-      displayValue = [];
-      operation = [];
-      EQUAL_clicked = false;
-    }
-
-    if (x == null) {
-      displayValue.push(Number(DISPLAY.textContent));
-      operation.push(operator['func']);
-      x = displayValue[0];
-    } else {
-      operation[0] = operator['func'];
-    }
-
-    operator['div'].classList.add('clicked');
-    OPERATOR_clicked = document.querySelector('.clicked');
-
-    if (displayValue.length == 2) {
-      y = displayValue[1];
-      getResult();
-    }
-  });
+  operator['div'].addEventListener('click', () => { saveValues(operator); });
 })
 
-EQUAL.addEventListener('click', () => {
+function saveValues(operator) {
+  if (OPERATOR_clicked) { OPERATOR_clicked.classList.remove('clicked'); }
+    
+  if (ERROR.textContent) {
+    clearDisplay();
+    CLEAR.textContent = 'C';
+  }
+  
+  if (EQUAL_clicked) {
+    x = null;
+    displayValue = [];
+    operation = [];
+    EQUAL_clicked = false;
+  }
+
+  if (x == null) {
+    displayValue.push(Number(DISPLAY.textContent));
+    operation.push(operator['func']);
+    x = displayValue[0];
+  } else {
+    operation[0] = operator['func'];
+  }
+  
+  operator['div'].classList.add('clicked');
+  OPERATOR_clicked = document.querySelector('.clicked');
+
+  if (displayValue.length == 2) {
+    y = displayValue[1];
+    getResult();
+  }
+}
+
+EQUAL.addEventListener('click', calculate);
+
+function calculate() {
   if (displayValue.length == 1 && x == null) {
     OPERATOR_clicked.classList.remove('clicked');
     EQUAL_clicked = true;
@@ -151,7 +154,7 @@ EQUAL.addEventListener('click', () => {
     y = Number(DISPLAY.textContent);
     getResult();
   }
-});
+}
 
 function getResult() {
   result = operate(operation[0], x, y);
@@ -201,3 +204,15 @@ function displayError(message) {
     ERROR.classList.remove('error');
   }
 }
+
+window.addEventListener('keydown', (e) => {
+  if (/[0-9]/.test(e.key)) { type(e.key); }
+  if (/\./.test(e.key)) { addDecimals(); }
+  if (/[\*\-\+\/]/.test(e.key)) {
+    let operator = OPERATORS.filter(operator => operator['name'] == e.key);
+    saveValues(operator[0]);
+  }
+  if (/Enter|=/.test(e.key)) { calculate(); }
+  if (/Backspace/.test(e.key)) { undo(); }
+  if (/Escape|Delete/.test(e.key)) { clearDisplay(); }
+})
